@@ -29,6 +29,7 @@
 
 #define GOLDEN_OUTPUT "odata_golden.txt"
 #define GOLDEN_OUTPUT_ENABLE "odata_enable_golden.txt"
+#define DIFF_OUT "diff.txt"
 
 #define OUT_FILE   "odata.txt"
 #define OUT_FILE_ENABLE "odata_enable.txt"

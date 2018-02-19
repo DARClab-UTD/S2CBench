@@ -89,11 +89,11 @@ debug: $(OBJS)
 wave:  $(OBJS) 
 	$(LINKER) -o $(TARGET) $(LDFLAGS) $(OBJS) $(LIBS) $(WAVEFLAG)
 
-main.o: main.cpp
+main.o: main.cpp define.h
 	$(CC) $(CFLAGS) $(CWB_SC_INCL) $(INCL) -c $< -o $@
-tb_interp.o: tb_interp.cpp
+tb_interp.o: tb_interp.cpp tb_interp.h
 	$(CC) $(CFLAGS) $(CWB_SC_INCL) $(INCL) -c $< -o $@
-filter_interp.o: filter_interp.cpp
+filter_interp.o: filter_interp.cpp filter_interp.h
 	$(CC) $(CFLAGS) $(CWB_SC_INCL) $(INCL) -c $< -o $@
 
 clean :
