@@ -24,46 +24,44 @@
 SC_MODULE (interp) {
 
 public:
-   
-  // Inputs
-   sc_in_clk clk;
-   sc_in<bool> rst;
-   
-   // Inputs
-   sc_in< sc_fixed<16,1,SC_TRN,SC_WRAP> > indata;
-   sc_in< sc_ufixed<9,0,SC_TRN,SC_WRAP> > infactor;
-  
 
-   // Output   
-   sc_out< bool > odata_en;
-   sc_out< sc_fixed<16,1,SC_RND,SC_SAT> > odata;
+	// Inputs
+	sc_in_clk clk;
+	sc_in<bool> rst;
 
-   // Variables
-   sc_fixed<16,1,SC_TRN,SC_WRAP> buffer[TAPS] ;
+	// Inputs
+	sc_in< sc_fixed<16,2,SC_TRN,SC_WRAP> > indata;
 
-  sc_fixed<16,1,SC_TRN,SC_WRAP> indata_read;
-  sc_ufixed<9,0,SC_TRN,SC_WRAP> infactor_read;
-  sc_fixed<16,1,SC_RND,SC_SAT> odata_write;
+	// Output   
+	sc_out< bool > odata_en;
+	sc_out< sc_fixed<16,2,SC_RND,SC_SAT> > odata[4];
+
+	// Variables
+	sc_fixed<16,2,SC_TRN,SC_WRAP> buffer[TAPS] ;
+
+	sc_fixed<16,2,SC_TRN,SC_WRAP> indata_read;
+	sc_ufixed<9,0,SC_TRN,SC_WRAP> infactor_read;
+	sc_fixed<16,2,SC_RND,SC_SAT> odata_write;
 
 
-   sc_fixed<36,6,SC_TRN,SC_WRAP> SoP1;
-   sc_fixed<36,6,SC_TRN,SC_WRAP> SoP2;
-   sc_fixed<36,6,SC_TRN,SC_WRAP> SoP3;
-   sc_fixed<36,6,SC_TRN,SC_WRAP> SoP4;
+	sc_fixed<36,6,SC_TRN,SC_WRAP> SoP1;
+	sc_fixed<36,6,SC_TRN,SC_WRAP> SoP2;
+	sc_fixed<36,6,SC_TRN,SC_WRAP> SoP3;
+	sc_fixed<36,6,SC_TRN,SC_WRAP> SoP4;
 
-  // Functions declarations
+	// Functions declarations
 
 
-   /* R */
-   void run (void);
+	/* R */
+	void run (void);
 
-  
-   SC_CTOR (interp) {
-      SC_CTHREAD (run, clk.pos());
-      reset_signal_is (rst, false );
-   }
 
-   ~interp() {}
+	SC_CTOR (interp) {
+	  SC_CTHREAD (run, clk.pos());
+	  reset_signal_is (rst, false );
+	}
+
+	~interp() {}
 
 
 }; 
