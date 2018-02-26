@@ -1,5 +1,5 @@
 ===================================================================================
-				S2CBENCH v.2.1
+				S2CBENCH v.2.2
 ===================================================================================
 
 S2CBENCH stands for Synthesizable SystemC Benchmark suite. It is a open source
@@ -25,13 +25,13 @@ implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 S2CBENCH includes the following Testcases:
 
 ------------------------------------------------------------------------------------
-|   NAME      |      		Description             |     Author   
+|   NAME      |        Description                      |     Author   
 |-------------+-----------------------------------------+---------------------------
 | adpcm       | Adaptive Differential Pulse-Code        | FFmpeg
-|	      |	Modulation (encoder part only)         	| PolyU DARClab 
+|             | Modulation (encoder part only)          | PolyU DARClab 
 |-------------+-----------------------------------------+--------------------------
-| ann         | Artificial Neuronal Network (ANN)	| David Aledo, CEI, ETSII, Universidad Politecnica Madrid 
-| 	      | 2 and 4 layer version	                | PolyU DARClab 
+| ann         | Artificial Neuronal Network (ANN)       | David Aledo, CEI, ETSII, Universidad Politecnica Madrid 
+|             | 2 and 4 layer version                   | PolyU DARClab 
 |-------------+-----------------------------------------+--------------------------
 | aes         | Advanced Encryption standared (AES)     | pjc.co.jp 
 |             | 128-bits (cipher and inv cipher)        | Shuangnan Liu, PolyU DARClab 
@@ -39,46 +39,46 @@ S2CBENCH includes the following Testcases:
 |aes_invcipher| Only aes inv cipher  part               |
 |-------------|-----------------------------------------|---------------------------
 | ave8        | moving average of last 8 numbers read   | UTD DARClab
-|	      |						|
+|             |                                         |
 |-------------+-----------------------------------------+--------------------------
-| cholesky    |  Cholesky demcomposition	        | UTD DARClab
-| 	      |						|  
+| cholesky    |  Cholesky demcomposition                | UTD DARClab
+|             |                                         |  
 |-------------+-----------------------------------------+--------------------------
-| disparity   | Stereoscopic image disparity estimator  | Miscellanous
-| estimator   |					        | PolyU DARClab 
+| disparity   | Stereoscopic image disparity estimator  | Shuangnan Liu
+| estimator   |                                         | PolyU,UTD DARClab 
 |-------------+-----------------------------------------+--------------------------
 | fft         | Fast Fourier Transform                  | R.Goswami,Synopsys, Inc.
-|             |	(fixed point)				| PolyU,UTD DARClab 
+|             | (fixed point)                           | PolyU,UTD DARClab 
 |-------------+-----------------------------------------+---------------------------
-| fir         | 10-Tap FIR filter                       | PolyU DARClab 
+| fir         | 9-Tap FIR filter                        | PolyU,UTD DARClab 
 |-------------+-----------------------------------------+--------------------------
 | decimation  | 5 Stages decimation filter              | PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
-|interpolation| 4 Stages interpolation filter           | PolyU DARClab
+|interpolation| 4 Stages interpolation filter           | PolyU,UTD DARClab
 |-------------+-----------------------------------------+--------------------------
-| JPEG        | JPEG encoder			        | Jianqi Chen, UTD
-| encoder     |						| DARClab
+| JPEG        | JPEG encoder                            | Jianqi Chen, UTD
+| encoder     |                                         | DARClab
 |-------------+-----------------------------------------+--------------------------
-| JPEG        | JPEG decoder			        | Shuangnan Liu, PolyU
-| decoder     |						| DARClab
+| JPEG        | JPEG decoder                            | Shuangnan Liu, PolyU
+| decoder     |                                         | DARClab
 |-------------+-----------------------------------------+--------------------------
 | idct        | Inverse Discrete Cosine Transform       | Thomas G. Lange
-|	      |						| PolyU DARClab
+|             |                                         | PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
 | kasumi      | Kasumi encryption algorithm             |  ETSI/SAGE
-|             |						|  PolyU DARClab
+|             |                                         |  PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
 | md5c        | Message Digest Algorithm                | RSA Data Security, Inc
-|	      |						| PolyU DARClab
+|             |                                         | PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
 | qsort       | Quick sort                              | Darel Rex Finley 
-|	      | 					| PolyU DARClab
+|             |                                         | PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
-| uart        | Universal Asynchronous			| Nandeesh Veeranna,PolyU DARClab
-|	      |	Receiver/Trasmitter			| 
+| uart        | Universal Asynchronous                  | Nandeesh Veeranna,PolyU DARClab
+|             | Receiver/Trasmitter                     | 
 |-------------+-----------------------------------------+--------------------------
 | snow3G      | snow 3G encryption algorithm            | ETSI/SAGE
-|	      |						| PolyU DARClab
+|       |     | PolyU DARClab
 |-------------+-----------------------------------------+--------------------------
 | sobel       | Sobel filter                            | Anushree Mahapatra, PolyU DARClab
 |             |                                         |
@@ -115,18 +115,23 @@ Extraction instruction (Linux):
 
 
 Revisions
-Version 2.0  update notes:
+Version 2.2  update notes:
 -------------------------
 
 Design updates:
 
 
 New designs added to the benchmark suite:
-1.- JPEG decoder
-2.- average of 8 numbers
+1.- new aes cipher
 
 Misc changes:
-NA
+1. redesigned the disparity estimator
+2. add shift registers in FIR filter
+3. changed coefficients and I/O configuration of interpolation
+4. fixed sum overflow in ave8
+5. modified the testbench for sobel, enabled HD mode
+6. eliminated extra EOB(end of block) generated by RLE in JPEG Encoder when last quantized element is non-zero
+ 
 
 
 
