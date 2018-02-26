@@ -23,10 +23,10 @@ void dct::jpeg_dct(void)
 {
   int u,v,x,y;
   int i = 0;
-  sc_fixed<17,15,SC_RND,SC_SAT> a;
+  sc_fixed<18,15,SC_RND,SC_SAT> a;
   sc_int<DCT_OUT_WIDTH> dct_output[8][8];
 
-  sc_fixed<4,2,SC_RND,SC_SAT> dct_co[8][8] = {
+  sc_fixed<6,2,SC_RND,SC_SAT> dct_co[8][8] = {
     #include "dct_coefficient.dat"
   };
   
@@ -55,7 +55,7 @@ void dct::jpeg_dct(void)
           a = 0;
           for(x=0;x<8;x++)
             for(int y=0;y<8;y++)
-              a+= (sc_fixed<17,15,SC_RND,SC_SAT>)line_buffer[x][y]*dct_co[x][u]*dct_co[y][v];
+              a+= (sc_fixed<18,15,SC_RND,SC_SAT>)line_buffer[x][y]*dct_co[x][u]*dct_co[y][v];
           if(u==0){
             //DC component - 1024, equivalent to all component - 128
             if(v==0) dct_output[u][v] = (0.25*0.5*a - 1024); 

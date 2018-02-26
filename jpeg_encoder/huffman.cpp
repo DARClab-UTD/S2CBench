@@ -158,7 +158,6 @@ void huffman::jpeg_ACcode(sc_int<QUAN_OUT_WIDTH> rl[64],sc_uint<8> length)
 
 
     // get second part of AC code
-    int j;
     int c = rl[i+1];
     if(rl[i+1]<0)
       c += powertable[cat]-1;

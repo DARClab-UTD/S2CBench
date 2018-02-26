@@ -2,7 +2,7 @@
 // 
 // File Name    : rle.cpp
 // Description  : JPEG RLE 
-// Release Date : 30/05/2017
+// Release Date : 26/02/2018
 // Author       : UT Dallas DARClab
 //                Jianqi Chen, Benjamin Carrion Schafer
 // 
@@ -12,6 +12,7 @@
 // Date         Version         Author          Description
 //----------------------------------------------------------------------------------------
 // 30/05/2017        1.0        UTD DARClab     JPEG RLE
+// 26/02/2018        1.1        UTD DARCLab     fixed a small bug; use index table for zigzag
 //=======================================================================================
 
 
@@ -69,11 +70,7 @@ void rle::jpeg_rle()
           rl[len++] = zz[i++];  //non-zero number
         }
       }
-      if(!(rl[len-1]==0 && rl[len-2]==0))
-      {
-        rl[len++] = 0;
-        rl[len++] = 0;
-      }
+
       while((rl[len-4]==15)&&(rl[len-3]==0))
       {
           rl[len-4]=0;
@@ -92,65 +89,13 @@ void rle::jpeg_rle()
 
 void rle::jpeg_zigzag(sc_int<QUAN_OUT_WIDTH> input[8][8])
 {
-  int i=0,j=0,k=0,d=0;
-  
-  //zigzag for the top left half of the input block
-  while(k<36)
-  {
-    zz[k++] = input[i][j];
-    if((i==0)&&(j%2==0))
-    {
-      j++;
-      d = 1;
-    }
-    else if((j==0)&&(i%2==1))
-    {
-      i++;
-      d = 0;
-    }
-    else if(d==0)
-    {
-      i--;
-      j++;
-    }
-    else
-    {
-      i++;
-      j--;
-    }
-  }
+  int i;
+  int x_index[64] = {0,0,1,2,1,0,0,1,2,3,4,3,2,1,0,0,1,2,3,4,5,6,5,4,3,2,1,0,0,1,2,3,
+                     4,5,6,7,7,6,5,4,3,2,1,2,3,4,5,6,7,7,6,5,4,3,4,5,6,7,7,6,5,6,7,7};
+  int y_index[64] = {0,1,0,0,1,2,3,2,1,0,0,1,2,3,4,5,4,3,2,1,0,0,1,2,3,4,5,6,7,6,5,4,
+                     3,2,1,0,1,2,3,4,5,6,7,7,6,5,4,3,2,3,4,5,6,7,7,6,5,4,5,6,7,7,6,7};
 
-  i = 7;
-  j = 1;
-  d = 0;
+  for( i=0; i<64; i++ )
+	  zz[i] = input[x_index[i]][y_index[i]];
 
-  //zigzag for the bottom right half of the input block
-  while(k<64)
-  {
-    zz[k++] = input[i][j];
-    if((i==7)&&(j%2==0))
-    {
-      j++;
-      d = 0;
-    }
-    else if((j==7)&&(i%2==1))
-    {
-      i++;
-      d = 1;
-    }
-    else if(d==0)
-    {
-      i--;
-      j++;
-    }
-    else
-    {
-      i++;
-      j--;
-    }
-  }
 }
-
-
-
-

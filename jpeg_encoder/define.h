@@ -18,29 +18,15 @@
 #include "systemc.h"
 #include "stdio.h"
 
-// High Resolution case 1920x1080
-#ifdef  RESHD
-   #define BYTES_PER_PIXEL 3
-   #define COLS 1920* BYTES_PER_PIXEL
-   #define ROWS 1080* BYTES_PER_PIXEL
-   #define SIZE COLS*ROWS
-   #define IMAGE_IN "batmanjoker.bmp"
-   #define IMAGE_OUT "batmanjoker_out.bmp"
-   #define IMAGE_GOLDEN "batmanjoker_golden.bmp"
 
+#define BYTES_PER_PIXEL 1
+#define COLS 512 * BYTES_PER_PIXEL
+#define ROWS 512 * BYTES_PER_PIXEL
+#define SIZE ROWS* COLS
+#define IMAGE_IN "lena512.bmp"
+#define IMAGE_OUT "lena512_out.jpg" 
+#define IMAGE_GOLDEN "lena512_golden.jpg"
 
-// 512x512 case
-#else
-
-   #define BYTES_PER_PIXEL 1
-   #define COLS 512 * BYTES_PER_PIXEL
-   #define ROWS 512 * BYTES_PER_PIXEL
-   #define SIZE ROWS* COLS
-   #define IMAGE_IN "lena512.bmp"
-   #define IMAGE_OUT "lena512_out.jpg" 
-   #define IMAGE_GOLDEN "lena512_golden.jpg"
-
-#endif
  
 #define DIFFFILENAME "jpeg_diff.txt"
 
@@ -79,7 +65,7 @@ typedef struct tagBITMAPINFOHEADER {
 #pragma pack(pop)
 
 #define DCT_OUT_WIDTH 12   //DCT output bitwidth
-#define QUAN_OUT_WIDTH 9  //quantization output bitwidth
+#define QUAN_OUT_WIDTH 10  //quantization output bitwidth
 #define RLE_BUFF_LEN 128   //RLE output buffer length
 
 

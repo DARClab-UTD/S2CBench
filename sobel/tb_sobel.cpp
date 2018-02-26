@@ -2,16 +2,17 @@
 // 
 // File Name    : tb_sobel.h
 // Description  : Main testbench file
-// Release Date : 23/07/2013
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen
 // 
 //
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date        Version    Author            Description
 //---------------------------------------------------------------------------------------
-//23/07/2013      1.0     PolyU DARC Lab    sends,receives data and compares the result with the golden output           
+//23/07/2013      1.0     PolyU DARC Lab    sends,receives data and compares the result with the golden output     
+//23/02/2018      1.1     UTD DARClab       fix some small bugs when sending data 
 //=======================================================================================
 #include "tb_sobel.h"
 
