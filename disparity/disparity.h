@@ -1,3 +1,19 @@
+//========================================================================================
+// 
+// File Name    : disparity.h
+// Description  : disparity module declaration
+// Release Date : 23/02/2018
+// Author       : PolyU, UT Dallas DARClab
+//                Shuangnan Liu, Jianqi Chen, Benjamin Carrion Schafer
+// 
+//
+// Revision History
+//---------------------------------------------------------------------------------------
+// Date         Version         Author          Description
+//----------------------------------------------------------------------------------------
+// 23/02/2018    1.0           DARClab          disparity module declaration
+//=======================================================================================
+
 #ifndef DISPARITY_H_
 #define DISPARITY_H_
 
@@ -10,8 +26,8 @@ public:
 	sc_in_clk clk;
 	sc_in<bool> rst;
 	
-	sc_in <sc_uint<8> > data_in_r[WIN_SIZE]; // pixel values of right image
-	sc_in <sc_uint<8> > data_in_l[WIN_SIZE]; // pixel values of left image
+	sc_in <sc_uint<8> > data_in_r; // pixel values of right image
+	sc_in <sc_uint<8> > data_in_l; // pixel values of left image
 	sc_in <sc_uint<16> > width; //width of the image(include margin) 
 	
 	// Output

@@ -2,15 +2,16 @@
 // 
 // File Name    : main.cpp
 // Description  : Main interpolation filter Testbench 
-// Release Date : 23/07/2013
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra 
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen
 //
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date         Version   Author       Description
 //----------------------------------------------------------------------------------------
 //23/07/2013      1.0       PolyU      main testbench for interpolation filter
+//23/02/2018        1.1    UTD        increase number of data outputs to 4
 //=======================================================================================
 
 #include "tb_interp.h"

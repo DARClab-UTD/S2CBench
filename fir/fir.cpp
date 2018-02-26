@@ -4,15 +4,16 @@
 // Description  : FIR filter
 // Release Date : 14/02/2013
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra 
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen
 // 
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date         Version    Author      Description
 //---------------------------------------------------------------------------------------
 //14/02/2013      1.0       PolyU     FIR filter main description
+//23/02/2018      1.1       UTD       add shift registers
 //=======================================================================================
-#define SC_INCLUDE_FX
+
 #include "fir.h"
 #define MAX 255 
 
@@ -20,9 +21,9 @@
 void fir::fir_main ( void ) {
 
 	// Variables declaration
-	sc_uint<16> filter_output_function;
+	sc_uint<24> filter_output_function;
 	sc_uint<8> in_data_read;
-	sc_fixed<8,4,SC_RND,SC_SAT> coeff_read[FILTER_TAPS];
+	sc_int<8> coeff_read[FILTER_TAPS];
 	sc_uint<8> data_buffer[FILTER_TAPS];
 	int i,j;
 	for(i=0;i<FILTER_TAPS-1;i++)
@@ -55,15 +56,15 @@ void fir::fir_main ( void ) {
 }
 
 // Filter function
-sc_uint<16> fir::filter( sc_uint<8>  *ary, sc_fixed<8,4,SC_RND,SC_SAT>  *coeff)
+sc_uint<24> fir::filter( sc_uint<8>  *ary, sc_int<8>  *coeff)
 {
-	sc_fixed<21,17,SC_RND,SC_SAT> sop=0;
+	sc_int<25> sop=0;
 	sc_uint <16> filter_result ;
 	int i ;
 
     // Sum of product (SOP) generation 
 	for(i=0;i<FILTER_TAPS;i++){
-		sop += sc_fixed<21,17,SC_RND,SC_SAT>(coeff[i]) * ary[i];
+		sop += sc_int<25>(coeff[i]) * ary[i];
 	}
 
     // Sign adjustment and rounding to sc_unit <8>)
@@ -71,7 +72,7 @@ sc_uint<16> fir::filter( sc_uint<8>  *ary, sc_fixed<8,4,SC_RND,SC_SAT>  *coeff)
 		sop = 0 ;
 	}
 
-	filter_result = sc_uint<16>(sop);
+	filter_result = sc_uint<24>(sop);
 	return filter_result;
 }
 

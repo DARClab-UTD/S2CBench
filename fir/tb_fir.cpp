@@ -13,7 +13,7 @@
 //14/02/2013       1.0     PolyU     FIR filter  testbench
 //
 //=======================================================================================
-#define SC_INCLUDE_FX
+
 #include "tb_fir.h"
 
 //--------------------------
@@ -46,7 +46,7 @@ void test_FIR::send(){
 	for(i=0; i < FILTER_TAPS; i ++){
 		if(fscanf(in_coeff_file, "%f", &coeff_read) == EOF)
 			break;
-		coeff[i].write(sc_fixed<8,4,SC_RND,SC_SAT>(coeff_read));
+		coeff[i].write(sc_int<8>(coeff_read));
 	}
 
 	wait();

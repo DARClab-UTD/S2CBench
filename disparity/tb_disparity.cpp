@@ -1,3 +1,19 @@
+//========================================================================================
+// 
+// File Name    : tb_disparity.cpp
+// Description  : testbench
+// Release Date : 23/02/2018
+// Author       : PolyU, UT Dallas DARClab
+//                Shuangnan Liu, Jianqi Chen, Benjamin Carrion Schafer
+// 
+//
+// Revision History
+//---------------------------------------------------------------------------------------
+// Date         Version         Author          Description
+//----------------------------------------------------------------------------------------
+// 23/02/2018    1.0           DARClab          disparity testbench
+//========================================================================================
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -107,7 +123,7 @@ void test_disparity::pad_image(U8 **image_out, U8 *image_in,
 		for (j = 0; j < width; j++)
 		{
 			index_old = i * width + j;
-			index_new = (margin_height + i) * padded_width + margin_width + j;
+			index_new =  i * padded_width + margin_width + j;
 
 			(*image_out)[index_new] = image_in[index_old];
 		}
@@ -200,7 +216,7 @@ void test_disparity::send()
 		U32 margin_width              = WIN_SIZE / 2;
 		U32 margin_height             = WIN_SIZE / 2;
 		U32 padded_width              = width + margin_width * 2;
-		U32 padded_height             = height + margin_height * 2;
+		U32 padded_height             = height + margin_height;
 		U32 padded_size               = padded_width * padded_height;
 		U32 mem_padded_size           = sizeof(U8) * padded_size;
 		U8 *padded_image_l            = (U8 *)malloc(mem_padded_size);
@@ -219,18 +235,21 @@ void test_disparity::send()
 
 		for (i=0; i<padded_height-WIN_SIZE+1; i++){
 			for (j=0; j<padded_width; j++){
-				for (k=0; k<WIN_SIZE; k++){
-					data_in_r[k].write(padded_image_r[(i+k)*padded_width + j]);
-					data_in_l[k].write(padded_image_l[(i+k)*padded_width + j]);
-				}
-				wait();
+				data_in_r.write(padded_image_r[i*padded_width + j]);
+				data_in_l.write(padded_image_l[i*padded_width + j]);
+				wait();	
 			}
 			wait();
 
 			while( ready.read()!=0 )
 				wait();
 		}
-
+		for (j=0; j<padded_width; j++){
+			wait();
+			wait();
+			wait();
+			wait();
+		}
 		
 		end = clock();
 		elapsed = (double)(end - start) / CLOCKS_PER_SEC;
@@ -252,6 +271,9 @@ void test_disparity::send()
 		free(image_disparity);
 		free(image_out);
 		
+		cout << endl << "Starting comparing results " << endl; 
+		compare_results();  // Compare results with golden output 
+		
 		sc_stop();
 		
 	}
@@ -259,7 +281,8 @@ void test_disparity::send()
 
 void test_disparity::recv()
 {
-	int k=0;
+	int k=0, line_count = 0;
+	int flag;
 	int data_out_read;
 
 	wait();
@@ -267,10 +290,78 @@ void test_disparity::recv()
 	while(1){
 		while(ready.read()!=1){
 			wait();
+			flag = 0;
 		}
-		data_out_read = data_out.read();
-		image_disparity[k] = data_out_read;
-		k++;
+
+		if (flag == 0)
+			line_count++;
+		flag = 1;
+		if(line_count > 2){
+			data_out_read = data_out.read();
+			image_disparity[k] = data_out_read;
+			k++;
+		}
 		wait();
 	}
+}
+
+void test_disparity::compare_results(){
+
+
+	// Variables declaration
+	int i,j, errors=0;
+	unsigned char*  golden, * result;
+	FILE *ifptr, *diffptr;
+
+	// Read Golden output image data
+	ifptr = fopen(IMAGE_GOLDEN,"rb");
+	if(!ifptr){
+		cout << "Could not open golden file"<< "\n";
+		sc_stop();
+		exit (-1);
+	}
+	fseek(ifptr,0,SEEK_END);
+	int size = ftell(ifptr);
+	golden = (unsigned char*) malloc(size);
+	result = (unsigned char*) malloc(size);
+	fseek(ifptr,0,SEEK_SET);
+	fread(golden,1,size,ifptr);
+	fclose(ifptr);
+
+	// Read output result
+	ifptr = fopen(IMAGE_DIS,"rb");
+	if(!ifptr){
+		cout << "Could not open golden file"<< "\n";
+		sc_stop();
+		exit (-1);
+	}
+	fread(result,1,size,ifptr);
+	fclose(ifptr);
+
+
+	//Dump the comparison result
+	diffptr = fopen (DIFFFILENAME, "w");
+	if(!diffptr){
+		cout << "Could not open " << DIFFFILENAME<< "\n";
+		sc_stop();
+		exit (-1);
+	}
+
+
+	// Main data comparison loop
+	for(j=0;j<size;j++){ 
+		if(result[j] !=  golden[j]){
+			fprintf(diffptr,"\n Golden: %x -- Output: %x",  golden[j], result[j]);	     
+			errors++;
+		}
+	}
+
+	if(errors == 0)
+		cout << endl << "Finished simulation SUCCESSFULLY" << endl;
+	else
+		cout << endl << "Finished simulation " << errors << " MISSMATCHES between Golden and Simulation" << endl;
+
+
+	fclose(diffptr);
+
 }

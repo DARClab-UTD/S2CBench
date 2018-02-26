@@ -28,7 +28,7 @@ void test_aes::send(){
   unsigned int  in_read, in_read_key;
 
   //Reset routine
-  if (MODE_ == 0) {
+  if (mode == 0) {
     in_file = fopen(INFILENAME, "rt");
   }
   else {
@@ -59,10 +59,6 @@ void test_aes::send(){
 //  wait();
 
   while(true){
-	if(MODE_ == 0)
-       mode.write(0);
-    else
-       mode.write(1);
    
     while(fscanf(in_file,"%x", &in_read) != EOF){
 	idata[i].write(in_read);
@@ -101,7 +97,7 @@ void test_aes::recv(){
 
   int i=0;
   
-  if (MODE_ == 0) {
+  if (mode == 0) {
     out_file = fopen (OUTFILENAME, "wt");
   }
   else {
@@ -109,7 +105,7 @@ void test_aes::recv(){
   }
 
   if(!out_file){
-	if (MODE_ == 0)
+	if (mode == 0)
     cout << "Could not open " << OUTFILENAME << "\n";
 	else
 	cout << "Could not open " << OUTFILENAME_D << "\n";
@@ -145,7 +141,7 @@ void test_aes::compare_results(){
   fclose(out_file);
 
   //  out_filter_file_read.open(OUTFILENAME);
-  if (MODE_ == 0) {
+  if (mode == 0) {
   out_file = fopen (OUTFILENAME, "rt");
   }
   else {
@@ -153,7 +149,7 @@ void test_aes::compare_results(){
   }
 
   if(!out_file){
-	if (MODE_ == 0) 
+	if (mode == 0) 
     cout << "Could not open " << OUTFILENAME << "\n";
 	else
 	cout << "Could not open " << OUTFILENAME_D << "\n";
@@ -165,14 +161,14 @@ void test_aes::compare_results(){
     //Load the golden pattern
     //
 
-  if (MODE_ == 0) {
+  if (mode == 0) {
   out_golden_file = fopen (OUTFILENAME_GOLDEN, "rt");
   }
   else {
   out_golden_file = fopen (OUTFILENAME_GOLDEN_D, "rt");
   }
   if(!out_golden_file){
-	if (MODE_ == 0)
+	if (mode == 0)
     cout << "Could not open " << OUTFILENAME_GOLDEN << "\n";
 	else
 	cout << "Could not open " << OUTFILENAME_GOLDEN_D << "\n";

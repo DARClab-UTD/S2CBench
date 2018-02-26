@@ -1,3 +1,19 @@
+//========================================================================================
+// 
+// File Name    : tb_disparity.h
+// Description  : testbench module declaration
+// Release Date : 23/02/2018
+// Author       : PolyU, UT Dallas DARClab
+//                Shuangnan Liu, Jianqi Chen, Benjamin Carrion Schafer
+// 
+//
+// Revision History
+//---------------------------------------------------------------------------------------
+// Date         Version         Author          Description
+//----------------------------------------------------------------------------------------
+// 23/02/2018    1.0           DARClab          testbench module declaration
+//========================================================================================
+
 #ifndef TB_DISPARITY_H_
 #define TB_DISPARITY_H_
 #include "define.h"
@@ -12,8 +28,8 @@ SC_MODULE (test_disparity){
 	sc_in <bool> ready;
 	
 	//outputs
-	sc_out <sc_uint<8> > data_in_r[WIN_SIZE];
-	sc_out <sc_uint<8> > data_in_l[WIN_SIZE];
+	sc_out <sc_uint<8> > data_in_r;
+	sc_out <sc_uint<8> > data_in_l;
 	sc_out <sc_uint<16> > image_width;
 	
 	U8 *image_disparity;
@@ -33,6 +49,7 @@ SC_MODULE (test_disparity){
 	
 	void recv();
 	void send();
+	void compare_results();
 	
 	SC_CTOR (test_disparity){
 		

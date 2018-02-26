@@ -14,7 +14,7 @@
 //
 // g++ -o filter.exe main.cpp tb_fir.cpp fir.cpp -I$SYSTEMC_HOME/include -L$SYSTEMC_HOME/lib -lsystemc -lm
 //===========================================================================
-#define SC_INCLUDE_FX
+
 #include "define.h"
 #include "fir.h"
 #include "tb_fir.h"
@@ -25,9 +25,9 @@ int sc_main(int argc, char** argv)
   sc_clock                clk("clk", 25, SC_NS, 0.5, 12.5, SC_NS, true);
   sc_signal<bool>         rst;
   sc_signal<sc_uint<8> >  in_data;
-  sc_signal<sc_fixed<8,4,SC_RND,SC_SAT> > coeff[FILTER_TAPS];
+  sc_signal<sc_int<8> > coeff[FILTER_TAPS];
  
-  sc_signal<sc_uint<16> > filter_output; 
+  sc_signal<sc_uint<24> > filter_output; 
   int x;
   char name[10];
 

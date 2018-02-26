@@ -1,3 +1,19 @@
+//========================================================================================
+// 
+// File Name    : disparity.cpp
+// Description  : disparity estimator
+// Release Date : 23/02/2018
+// Author       : PolyU, UT Dallas DARClab
+//                Shuangnan Liu, Jianqi Chen, Benjamin Carrion Schafer
+// 
+//
+// Revision History
+//---------------------------------------------------------------------------------------
+// Date         Version         Author          Description
+//----------------------------------------------------------------------------------------
+// 23/02/2018    1.0           DARClab          disparity main description
+//========================================================================================
+
 #include "disparity.h"
 
 // right shift the right image and calculate the difference 
@@ -76,14 +92,19 @@ void disparity::disparity_main(void)
 	while(1){
 		// read inputs
 		ready.write(0);
-		
+
 		wait();
 		width_read = width.read();
 		for ( i=0; i < width_read; i++){
-			for ( j=0; j < WIN_SIZE; j++){
-				in_buffer_r[i][j] = data_in_r[j].read();
-				in_buffer_l[i][j] = data_in_l[j].read();
+			//shift
+			for ( j=WIN_SIZE-1; j>0; j--){
+				in_buffer_r[i][j] = in_buffer_r[i][j-1];
+				in_buffer_l[i][j] = in_buffer_l[i][j-1];
 			}
+			// read inputs
+			in_buffer_r[i][0] = data_in_r.read();
+			in_buffer_l[i][0] = data_in_l.read();
+
 			wait();
 		}
 		

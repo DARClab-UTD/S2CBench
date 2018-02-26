@@ -14,7 +14,7 @@
 //14/02/2013        PolyU           1.0     Main system description
 //24/11/2014        PolyU           1.1     cipher and inv cipher combined into same file
 //
-// g++ -o aes_cipher.exe main.cpp tb_aes_cipher_3G.cpp aes_cipher.cpp -I$SYSTEMC_HOME/include -L$SYSTEMC_HOME/lib -lsystemc -lm
+// g++ -o aes_cipher.exe main.cpp tb_aes.cpp aes.cpp -I$SYSTEMC_HOME/include -L$SYSTEMC_HOME/lib -lsystemc -lm
 //===========================================================================
 
 #include "aes.h"

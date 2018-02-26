@@ -2,16 +2,17 @@
 //
 // File Name    : tb_interp.cpp
 // Description  : Send/receive and compare results parts of Testbench
-// Release Date : 23/07/2013
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen
 // 
 //
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date           Version     Author    Description
 //----------------------------------------------------------------------------------------
-// 23/07/2013     1.0     PolyU         TB stimuli generator and data receive and compare
+// 23/07/2013     1.0         PolyU     TB stimuli generator and data receive and compare
+// 23/02/2018     1.1         UTD       increase number of data outputs to 4
 //=======================================================================================
 #include "tb_interp.h"
 

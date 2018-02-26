@@ -2,7 +2,7 @@
 // 
 // File Name    : ave8.h
 // Description  : ave8 module declaration
-// Release Date : 12/08/2016
+// Release Date : 12/08/2017
 // Author       : DARClab
 // 
 // Revision History

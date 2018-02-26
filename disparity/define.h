@@ -1,3 +1,19 @@
+//========================================================================================
+// 
+// File Name    : define.h
+// Description  : Main definition header file for disparity
+// Release Date : 23/02/2018
+// Author       : PolyU, UT Dallas DARClab
+//                Shuangnan Liu, Jianqi Chen, Benjamin Carrion Schafer
+// 
+//
+// Revision History
+//---------------------------------------------------------------------------------------
+// Date         Version         Author          Description
+//----------------------------------------------------------------------------------------
+// 23/02/2018    1.0           DARClab          definition file for disparity
+//=======================================================================================
+
 #ifndef DEFINE_H_
 #define DEFINE_H_
 #include "systemc.h"
@@ -9,10 +25,12 @@
 #define IMAGE_L     (IMAGE_NAME "_l" IMAGE_EXT)
 #define IMAGE_R     (IMAGE_NAME "_r" IMAGE_EXT)
 #define IMAGE_DIS   (IMAGE_NAME "_out" IMAGE_EXT)
+#define IMAGE_GOLDEN (IMAGE_NAME "_out_golden" IMAGE_EXT)
+#define DIFFFILENAME "diff.txt"
 
 #define WIN_SIZE    5 //must be odd number
 #define MAX_SHIFT   32
-#define IN_BUFFER_DEPTH    2048
+#define IN_BUFFER_DEPTH    512
 
 #define HIST_BIN 256  // color depth for histogram_equalization
 

@@ -3,9 +3,9 @@
 //
 // File Name    : tb_aes_cipher.cpp
 // Description  : Testbench
-// Release Date : 29/07/2013
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Shuangnan Liu 
+//                Benjamin Carrion Schafer, Shuangnan Liu, Jianqi Chen 
 // 
 //
 // Revision History
@@ -13,6 +13,7 @@
 // Date         Version  Author     Description
 //----------------------------------------------------------------------------------------
 //14/02/2013      1.0    PolyU      aes original testbench
+//23/02/2018      2.0    UTD        change input order for new aes cipher
 //
 //=======================================================================================
 #include "tb_aes.h"
@@ -23,66 +24,58 @@
 */
 void test_aes::send(){
 
-  // Variables declaration
-  int i=0, ret=0;
-  unsigned int  in_read, in_read_key;
+	// Variables declaration
+	int i=0, ret=0;
+	unsigned int  in_read, in_read_key;
 
-  //Reset routine
-  //if (mode == 0) {
-    in_file = fopen(INFILENAME, "rt");
-  //}
- // else {
-   //makeclear in_file = fopen(INFILENAME_D, "rt");
-  //}
+	//Reset routine
+	in_file = fopen(INFILENAME, "rt");
 
-  if(!in_file){
-    cout << "Could not open " << INFILENAME << "\n";
-    sc_stop();
-    exit (-1);
-  }
-
-  in_file_key = fopen(INFILENAME_KEY, "rt");
-
-  if(!in_file_key){
-    cout << "Could not open " << INFILENAME_KEY << "\n";
-    sc_stop();
-    exit (-1);
-  }
-
-  for(i=0; i < SIZE; i ++){
-    idata[i].write(0); 
-    fscanf(in_file_key, "%x", &in_read_key);
-    input_key[i] = in_read_key;
-  }
-  i = 0;
-
-//  wait();
-
-  while(true){
-   
-    while(fscanf(in_file,"%x", &in_read) != EOF){
-	idata[i].write(in_read);
-	ikey[i].write(input_key[i]);
-       	i++;
-	
-	if(i == SIZE){
-	  i = 0;
-	  wait();
+	if(!in_file){
+		cout << "Could not open " << INFILENAME << "\n";
+		sc_stop();
+		exit (-1);
 	}
-      }
-  
-  
-  
-    fclose(in_file);
-    fclose(in_file_key);
 
-    cout << endl << "Starting comparing results " << endl;
-   
-   wait();
-   compare_results(); 
-   exit(-1);
+	in_file_key = fopen(INFILENAME_KEY, "rt");
 
-  }//while_loop
+	if(!in_file_key){
+		cout << "Could not open " << INFILENAME_KEY << "\n";
+		sc_stop();
+		exit (-1);
+	}
+
+	for(i=0; i < SIZE; i ++){
+		idata[i].write(0); 
+		fscanf(in_file_key, "%x", &in_read_key);
+		input_key[i] = in_read_key;
+	}
+	i = 0;
+
+	wait();
+
+	while(true){
+		while(fscanf(in_file,"%x", &in_read) != EOF){
+			idata[(i%4)*4+i/4].write(in_read); //change order(index matrix transverse)
+			ikey[(i%4)*4+i/4].write(input_key[i]);
+			i++;
+	
+			if(i == SIZE){
+			i = 0;
+			wait();
+		}
+	}
+
+	fclose(in_file);
+	fclose(in_file_key);
+
+	cout << endl << "Starting comparing results " << endl;
+	
+	wait();
+	compare_results(); 
+	exit(-1);
+
+	}//while_loop
 }
 
 
@@ -92,39 +85,32 @@ void test_aes::send(){
 */
 void test_aes::recv(){
 
-  // Variables declaration
-  sc_uint<8> out_write[SIZE];
+	// Variables declaration
+	sc_uint<8> out_write[SIZE];
 
-  int i=0;
-  
- // if (mode == 0) {
-    out_file = fopen (OUTFILENAME, "wt");
- // }
- // else {
-   // out_file = fopen (OUTFILENAME_D, "wt");
-  //}
+	int i=0;
 
-  if(!out_file){
-	//if (mode == 0)
-    cout << "Could not open " << OUTFILENAME << "\n";
-	//else
-	//cout << "Could not open " << OUTFILENAME_D << "\n";
-    sc_stop();
-    exit(-1);
-  }
+	out_file = fopen (OUTFILENAME, "wt");
+
+	if(!out_file){
+		cout << "Could not open " << OUTFILENAME << "\n";
+
+		sc_stop();
+		exit(-1);
+	}
 
 
-  wait();
-
-  while(true){
 	wait();
+	wait();
+	while(true){
+		wait();
 	
-    for(i=0; i< SIZE; i++){
-      out_write[i] = odata[i].read();
-      fprintf(out_file,"%x ",(unsigned int)out_write[i]);
-    }
-    fprintf(out_file,"\n");    
-    }
+		for(i=0; i< SIZE; i++){
+			out_write[i] = odata[(i%4)*4+i/4].read(); //change order(index matrix transverse)
+			fprintf(out_file,"%x ",(unsigned int)out_write[i]);
+		}
+		fprintf(out_file,"\n");    
+	}
 
 //  fclose(out_file);
 }

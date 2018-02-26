@@ -3,7 +3,7 @@
 //
 // File Name    : define.h
 // Description  : Main definition header file for AES
-// Release Date : 24/11/2014
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
 //                Benjamin Carrion Schafer, Shuangnan Liu 
 //
@@ -12,6 +12,7 @@
 // Date        Version  Author       Description
 //----------------------------------------------------------------------------------------
 //24/11/2014     1.0     PolyU        definition file for AES
+//23/02/2018     2.0     UTD          add type definitions for new aes cipher
 //=======================================================================================
 
 #ifndef DEFINE_H
@@ -23,12 +24,13 @@
 #include "stdio.h"
 
 
+#define Nb 4 // Number of columns comprising the State
 #define SIZE 16
+#define Nr 10 // Number of rounds
 
-#define NB 4
-#define NBb 16
-#define nk 4                            
-#define nr 10   
+typedef unsigned int U32;
+typedef unsigned short int U16;
+typedef unsigned char U8;
 //#define MODE_ 0
 
 #define INFILENAME                "aes_cipher_input.txt"

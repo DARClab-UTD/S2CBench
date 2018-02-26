@@ -18,7 +18,7 @@
 #define DEFINE_H
 
 #include "systemc.h"
-#define SC_INCLUDE_FX
+
 //#include <iostream>
 #include "stdio.h"
 

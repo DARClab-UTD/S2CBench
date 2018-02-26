@@ -1,17 +1,17 @@
-
 //========================================================================================
 // 
 // File Name    : tb_interp.h
 // Description  : Header for the testbench
-// Release Date : 23/07/2013
+// Release Date : 23/02/2018
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra  
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen 
 //
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date           Version   Author     Description
 //----------------------------------------------------------------------------------------
 // 23/07/2013        1.0    PolyU      TB header file
+// 23/02/2018        1.1    UTD        increase number of data outputs to 4
 //=======================================================================================
 #ifndef TB_INTERP_
 #define TB_INTERP_

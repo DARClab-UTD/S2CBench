@@ -14,7 +14,6 @@
 //=======================================================================================
 #ifndef TB_FIR_H_
 #define TB_FIR_H_
-#define SC_INCLUDE_FX
 #include "define.h"
 
 
@@ -24,11 +23,11 @@ SC_MODULE (test_FIR){
   sc_in<bool>          clk;
   sc_in<bool>          rst;
 
-  sc_in<sc_uint<16> > filter_output; 
+  sc_in<sc_uint<24> > filter_output; 
 
   // Outputs
   sc_out<sc_uint<8> >  in_data;
-  sc_out<sc_fixed<8,4,SC_RND,SC_SAT> > coeff[FILTER_TAPS];
+  sc_out<sc_int<8> > coeff[FILTER_TAPS];
 
 
   //File pointers

@@ -2,7 +2,7 @@
 // 
 // File Name    : tb_ave8.h
 // Description  : Testbench
-// Release Date : 12/08/2018
+// Release Date : 12/08/2017
 // Author       : DARClab, UTD
 // 
 // Revision History

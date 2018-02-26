@@ -3,15 +3,16 @@
 // 
 // File Name    : filter_interp.cpp
 // Description  : Main interpolation filter function
-// Release Date : 23/07/2013
+// Release Date : 23/02/2018 
 // Author       : PolyU DARC Lab
-//                Benjamin Carrion Schafer, Anushree Mahapatra 
+//                Benjamin Carrion Schafer, Anushree Mahapatra, Jianqi Chen
 //
 // Revision History
 //---------------------------------------------------------------------------------------
 // Date         Version   Author      Description
 //----------------------------------------------------------------------------------------
 //23/07/2013     1.0      PolyU      Interpolation filter description
+//23/02/2018     1.1      UTD        Changed coefficients
 //=======================================================================================
 #include "filter_interp.h"
 
